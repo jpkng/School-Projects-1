@@ -1,0 +1,10 @@
+* { box-sizing: border-box; font-family: Inter, system-ui, Arial; }
+body { margin: 12px; background:#f5f7fb; color:#111; }
+header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.controls { display:flex; gap:12px; align-items:center; }
+.controls label { font-size:14px; }
+main { display:flex; gap:12px; margin-top:12px; }
+canvas { background: #ffffff; border: 1px solid #d1d9e6; border-radius:8px; }
+.legend { width:220px; padding:8px; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(20,30,60,0.06); }
+.legend ul { padding-left:18px; margin:6px 0; }
+button { padding:6px 10px; border-radius:6px; border:1px solid #cbd6ea; background:#eef5ff; cursor:pointer; }

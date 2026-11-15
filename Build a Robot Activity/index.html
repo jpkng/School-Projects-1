@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lecture 8 — Project: A Robot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Lecture 8 — Project: A Robot</h1>
+    <div class="controls">
+      <label>Mode:
+        <select id="modeSelect">
+          <option value="manual">Manual (arrow keys)</option>
+          <option value="auto">Autonomous (wall-follow)</option>
+        </select>
+      </label>
+      <label>Speed:
+        <input id="speedRange" type="range" min="0" max="4" step="0.1" value="2">
+      </label>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </header>
+
+  <main>
+    <canvas id="world" width="900" height="520"></canvas>
+    <aside class="legend">
+      <p><strong>Controls</strong></p>
+      <ul>
+        <li>Arrow Up / Down - forward / backward</li>
+        <li>Arrow Left / Right - rotate</li>
+        <li>Mode: manual / autonomous</li>
+      </ul>
+      <p><strong>What you see</strong></p>
+      <ul>
+        <li>Blue circle = robot body</li>
+        <li>Triangle = heading</li>
+        <li>Green ray = front distance sensor</li>
+        <li>Red rectangle = obstacle</li>
+      </ul>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Book Ordering System</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg,#6a11cb,#2575fc);
+margin:0;
+padding:0;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:#333;
+}
+
+.container{
+background:white;
+width:800px;
+border-radius:15px;
+padding:30px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+.steps{
+display:flex;
+justify-content:space-between;
+margin-bottom:30px;
+}
+
+.step{
+flex:1;
+text-align:center;
+padding:10px;
+border-bottom:4px solid lightgray;
+}
+
+.active{
+border-bottom:4px solid #2575fc;
+font-weight:bold;
+color:#2575fc;
+}
+
+.section{
+display:none;
+}
+
+.section.active{
+display:block;
+}
+
+.book{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.book img{
+width:120px;
+border-radius:8px;
+}
+
+button{
+background:#2575fc;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:8px;
+cursor:pointer;
+margin-top:15px;
+}
+
+button:hover{
+background:#174cc5;
+}
+
+input{
+width:100%;
+padding:8px;
+margin:8px 0;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+.success{
+text-align:center;
+font-size:20px;
+color:green;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📚 Order Book</h1>
+
+<div class="steps">
+<div class="step active" id="step1">1 Locate Book</div>
+<div class="step" id="step2">2 Add to Basket</div>
+<div class="step" id="step3">3 Payment</div>
+<div class="step" id="step4">4 Address</div>
+<div class="step" id="step5">5 Confirm</div>
+</div>
+
+
+<!-- Locate Book -->
+<div class="section active" id="locate">
+
+<h2>Locate Book</h2>
+
+<input type="text" placeholder="Search book title..." id="search">
+
+<div class="book">
+<img src="https://covers.openlibrary.org/b/id/10523338-L.jpg">
+
+<div>
+<h3 id="bookTitle">The Great Adventure</h3>
+<p>Author: John Smith</p>
+<button onclick="nextStep(2)">Select Book</button>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- Add to Basket -->
+<div class="section" id="basket">
+
+<h2>Add Book to Basket</h2>
+
+<p>You selected: <b>The Great Adventure</b></p>
+
+<button onclick="nextStep(3)">Add to Basket</button>
+
+</div>
+
+
+<!-- Payment -->
+<div class="section" id="payment">
+
+<h2>Enter Payment Details</h2>
+
+<input type="text" placeholder="Card Name">
+<input type="text" placeholder="Card Number">
+<input type="text" placeholder="Expiry Date">
+<input type="text" placeholder="CVV">
+
+<button onclick="nextStep(4)">Continue</button>
+
+</div>
+
+
+<!-- Address -->
+<div class="section" id="address">
+
+<h2>Complete Address</h2>
+
+<input type="text" placeholder="Full Name">
+<input type="text" placeholder="Street Address">
+<input type="text" placeholder="City">
+<input type="text" placeholder="Postal Code">
+
+<button onclick="nextStep(5)">Continue</button>
+
+</div>
+
+
+<!-- Confirm -->
+<div class="section" id="confirm">
+
+<h2>Confirm Order</h2>
+
+<p>Book: <b>The Great Adventure</b></p>
+<p>Price: <b>$19.99</b></p>
+
+<button onclick="finishOrder()">Confirm Order</button>
+
+</div>
+
+
+<!-- Success -->
+<div class="section" id="success">
+
+<div class="success">
+
+✅ Order Confirmed!  
+<br><br>
+Thank you for your purchase.
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function nextStep(step){
+
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+
+if(step==2){
+document.getElementById("basket").classList.add("active");
+document.getElementById("step2").classList.add("active");
+}
+
+if(step==3){
+document.getElementById("payment").classList.add("active");
+document.getElementById("step3").classList.add("active");
+}
+
+if(step==4){
+document.getElementById("address").classList.add("active");
+document.getElementById("step4").classList.add("active");
+}
+
+if(step==5){
+document.getElementById("confirm").classList.add("active");
+document.getElementById("step5").classList.add("active");
+}
+
+}
+
+function finishOrder(){
+
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+document.getElementById("success").classList.add("active");
+
+}
+
+</script>
+
+</body>
+</html>

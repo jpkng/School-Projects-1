@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Top Down Game</title>
+<style>
+    body {
+        margin: 0;
+        background: #111;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: white;
+        font-family: Arial;
+    }
+    canvas {
+        background: #222;
+        border: 2px solid #555;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="game" width="800" height="500"></canvas>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+// Player
+const player = {
+    x: 50,
+    y: 50,
+    size: 20,
+    speed: 3,
+    color: "lime"
+};
+
+// Collectible
+let coin = {
+    x: 300,
+    y: 200,
+    size: 15,
+    color: "gold"
+};
+
+let score = 0;
+
+// Walls
+const walls = [
+    {x: 200, y: 100, w: 400, h: 20},
+    {x: 100, y: 300, w: 500, h: 20},
+    {x: 150, y: 150, w: 20, h: 200}
+];
+
+// Controls
+const keys = {};
+document.addEventListener("keydown", e => keys[e.key.toLowerCase()] = true);
+document.addEventListener("keyup", e => keys[e.key.toLowerCase()] = false);
+
+// Collision check
+function collides(a, b) {
+    return a.x < b.x + b.w &&
+           a.x + a.size > b.x &&
+           a.y < b.y + b.h &&
+           a.y + a.size > b.y;
+}
+
+// Wall collision resolution
+function movePlayer(dx, dy) {
+    let newX = player.x + dx;
+    let newY = player.y + dy;
+
+    let tempPlayer = {x: newX, y: player.y, size: player.size};
+
+    let blockedX = walls.some(w => collides(tempPlayer, w));
+
+    tempPlayer = {x: player.x, y: newY, size: player.size};
+
+    let blockedY = walls.some(w => collides(tempPlayer, w));
+
+    if (!blockedX) player.x = newX;
+    if (!blockedY) player.y = newY;
+}
+
+// Game loop
+function update() {
+    let dx = 0, dy = 0;
+
+    if (keys["w"] || keys["arrowup"]) dy -= player.speed;
+    if (keys["s"] || keys["arrowdown"]) dy += player.speed;
+    if (keys["a"] || keys["arrowleft"]) dx -= player.speed;
+    if (keys["d"] || keys["arrowright"]) dx += player.speed;
+
+    movePlayer(dx, dy);
+
+    // Coin pickup
+    if (
+        player.x < coin.x + coin.size &&
+        player.x + player.size > coin.x &&
+        player.y < coin.y + coin.size &&
+        player.y + player.size > coin.y
+    ) {
+        score++;
+        coin.x = Math.random() * (canvas.width - 30);
+        coin.y = Math.random() * (canvas.height - 30);
+    }
+}
+
+function drawRect(obj) {
+    ctx.fillStyle = obj.color;
+    ctx.fillRect(obj.x, obj.y, obj.w || obj.size, obj.h || obj.size);
+}
+
+function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Walls
+    walls.forEach(w => drawRect({...w, color: "gray"}));
+
+    // Coin
+    drawRect(coin);
+
+    // Player
+    drawRect(player);
+
+    // Score
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Score: " + score, 10, 25);
+}
+
+function gameLoop() {
+    update();
+    render();
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+</script>
+
+</body>
+</html>
